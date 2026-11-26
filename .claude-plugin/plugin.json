@@ -1,11 +1,13 @@
 {
-  "name": "hyperclip",
-  "version": "0.2.8",
+  "name": "hyperclip-io",
+  "displayName": "hyperclip.io",
+  "version": "0.2.9",
   "description": "Turn long recordings into short, captioned clips with Hyperclip: pick the moments, draft, style, preview and export inside Claude.",
   "author": {
-    "name": "Hyperclip"
+    "name": "hyperclip.io"
   },
   "homepage": "https://hyperclip.io",
+  "privacyPolicyUrl": "https://hyperclip.io/privacy",
   "license": "SEE LICENSE IN LICENSE",
   "keywords": [
     "video",
