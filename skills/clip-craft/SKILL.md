@@ -35,7 +35,7 @@ A punch is a zoom-in on a high-trust claim or a pivot in the argument, held for 
 
 ## Name straps and logos
 
-Both are opt-in. Do not add either unless the user asked. For a name strap, ask for the exact spelling and an optional role if you were not given them, and never invent either. Find it with `find_templates` and place it within the first few seconds of the clip.
+Both are opt-in. Do not add either unless the user asked. If a brand kit exists (`get_brand_kit`), graphics added with `apply_element` pick up its colours and font by themselves; do not restyle by hand. For a name strap, ask for the exact spelling and an optional role if you were not given them, and never invent either. Find it with `find_templates` and place it within the first few seconds of the clip with `apply_element` (give it a `name`, `props`, and `show_at` / `hide_at`).
 
 ## Layout: follow the speaker relationship
 
@@ -55,8 +55,9 @@ After any layout change, look with `get_clip_frame` inside the span (see `clip-q
 
 ## What the tools cannot do yet (be upfront)
 
-- There is no tool to author a custom lower third, motion graphic or new element. Only graphics that `find_templates` returns can be placed.
-- There is no brand kit read. Brand colours, fonts and logos come from the user (ask for hex colours; do not guess "the brand"). A logo cannot be placed from a URL or invented; say so and offer what is possible.
+- There is no tool to author a custom lower third, motion graphic or new element. Only graphics that `find_templates` returns can be placed: in a layout slot with `apply_template`, or over the footage for a span with `apply_element`.
+- `get_brand_kit` reads the workspace's brand colours, font and logos (brand kits are set in the Hyperclip web app, and there may be none). Use it before asking the user for colours; with no kit, ask for hex colours and do not guess "the brand". A logo cannot be placed from a URL or invented; say so and offer what is possible.
+- `get_design_defaults` returns the house numbers for padding, hook window, held pictures and caption size when you need them.
 - Do not say a capability is unsupported when it is: multi-part stitching, layouts and captions all work.
 
 More detail on scenarios and layouts: [references/scenarios-and-layouts.md](references/scenarios-and-layouts.md).

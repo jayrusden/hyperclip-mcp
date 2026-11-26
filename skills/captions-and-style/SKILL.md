@@ -5,15 +5,15 @@ description: Turn on, place, size and style burned-in captions on a Hyperclip cl
 
 # Captions and style
 
-Captions are burned in from the video's transcript through the clip's `Captions` overlay. New drafts include it switched off.
+Captions are burned in from the video's transcript through the clip's `Captions` overlay. New drafts come with captions on.
 
 ## Captions are on by default
 
-Every clip should ship with captions on (most viewers watch muted), unless the user said no. "Add captions" is a full authoring request: send everything in one `update_clip(clip_id, captions={...})` call.
+Every clip ships with captions on (most viewers watch muted), unless the user said no; `draft_clip` already turns them on, and `update_clip(captions={"enabled": false})` turns them off. Restyling is a full authoring request: send everything in one `update_clip(clip_id, captions={...})` call.
 
 - `enabled: true`, plus style keys in snake_case: `font_family`, `font_size`, `color`, `highlight` (karaoke-style word highlight), `highlight_color`, `words_per_line`, `caption_width` (percent), `y` (vertical position, percent from the top edge of the caption box), `text_align`, `pill` / `pill_color` / `pill_opacity`, `stroke_color` / `stroke_width`.
-- Size for the canvas. The defaults (font size 50, 6 words per line, width 80, y 85) are not tuned to any canvas. On vertical, portrait and square, use fewer words per line (3 to 4 is typical on vertical) and check that lines are neither tiny nor running off the sides. Re-size together: font size, width and words per line.
-- Stated style wins: if the user gave a font or colours, use them. Otherwise keep defaults rather than inventing a look. Avoid heavy display fonts like Impact, per-word rainbow colours, and yellow on white.
+- Size for the canvas. Call `get_design_defaults(canvas)` for the house starting values per canvas (font size, width, words per line; on vertical that is 5 words per line, on landscape more). A fresh draft or a captions-on edit on vertical, square or portrait already carries them; a stated style or the clip's existing style always wins. Re-size together (font size, width and words per line) whenever the canvas changes, and check that lines are neither tiny nor running off the sides.
+- Stated style wins: if the user gave a font or colours, use them. Otherwise, if `get_brand_kit` returns a kit, use its colours and font; with no kit keep defaults rather than inventing a look. Avoid heavy display fonts like Impact, per-word rainbow colours, and yellow on white.
 - One highlight colour per sentence.
 
 ## Placement and safe zones
@@ -33,7 +33,7 @@ Do not claim what you did not observe. A still cannot show motion. The caption a
 
 ## Wrong words
 
-Misheard names, product terms, numbers: `edit_caption_text(clip_id, find, replace)`. It rewrites the literal phrase in the stored transcript of the source video for that clip's time range. That is the source transcript, so it also changes every other clip cut from the same words, and captions elsewhere. Say that in one clause when it could matter. If the phrase is not found, read the range with `read_transcript` and copy the exact spelling. Fix wording through this tool, never by working around it with a text overlay.
+Misheard names, product terms, numbers: `edit_caption_text(clip_id, find, replace)`. It rewrites the literal phrase in the stored transcript of the source video for that clip's time range. That is the source transcript, so it also changes every other clip cut from the same words, and captions elsewhere. Say that in one clause when it could matter. If the phrase is not found, read what the clip plays with `read_clip_transcript` (or the range with `read_transcript`) and copy the exact spelling. Fix wording through this tool, never by working around it with a text overlay.
 
 ## Style versus content
 

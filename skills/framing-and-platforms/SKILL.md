@@ -30,13 +30,20 @@ Letterbox (whole frame, bars) only when:
 
 Never letterbox because the source is low-resolution or "might look soft". If a crop will be soft, crop and mention it in one clause. A stated whole-frame preference persists for the clip: carry it onto new segments and canvas changes.
 
-## No automatic speaker crop yet (be honest)
+## Frame the speaker with `frame_speakers`
 
-The connector cannot detect faces or auto-crop to a speaker. A wide recording drafted to `vertical`, `square` or `portrait` centre-crops each segment, which often slices a speaker out, and the draft may flag this. Reframe by hand and say so if asked:
+A wide recording drafted to `vertical`, `square` or `portrait` centre-crops each segment, which often slices a speaker out, and the draft may flag this. Use `frame_speakers(clip_id, preset)` to find the faces and crop each part to the speaker:
+
+1. Call it once the parts and canvas are settled. With one face in a part it frames that person; with several it frames the active speaker.
+2. When a part shows several faces and no clear active speaker, it leaves that part alone and says so. Pick the person from the transcript or the user's words and call again with `speaker_by_segment={"<part index from 0>": "speaker_0"}`. Use `apply=false` to only measure.
+3. It also reports a caption position that clears the face; use it for captions `y` unless the user stated one.
+4. Look with `get_clip_frame` before telling the user the framing is right, never before.
+
+Hand-framing is the fallback when it finds no face or you need something specific:
 
 1. `get_clip_frame` at a moment of speech to see where the speaker sits.
 2. Set the crop per segment with `update_clip` and `ops`: `segment.patch` with `fields: {"transform": {"fit": "contain", "scale": ..., "x": ..., "y": ...}}`. Scale 100 shows the whole source frame; a 16:9 source fills a vertical canvas at roughly 3x; larger zooms in. `x` and `y` are the pan anchor, in percent from the top left (50, 50 is centre).
-3. Look again with `get_clip_frame`, adjust, look once more. After that stop fiddling and tell the user what you did and that framing is manual for now.
+3. Look again with `get_clip_frame`, adjust, look once more, then stop fiddling and tell the user what you did.
 4. Never claim the speaker is centred unless you looked at the frame.
 
 Sources that already contain black bars (a panel floating on black, burned-in logos) may need a bigger zoom to clear them; check the frame and mention softness in a clause rather than keeping the bars.
@@ -52,7 +59,8 @@ Sources that already contain black bars (a panel floating on black, burned-in lo
 Changing the canvas, or changing scale or fit so bars appear or disappear, re-opens everything below in the same turn:
 
 1. **Crop.** The old crop was solved for the old canvas. If the new canvas matches the source aspect, remove the transform; otherwise re-frame it for the new canvas.
-2. **Caption size.** Re-size font size, width and words per line together for this canvas (see `captions-and-style`).
+1b. **Faces.** For a wide recording going vertical, square or portrait, run `frame_speakers` rather than centring by eye.
+2. **Caption size.** Re-size font size, width and words per line together for this canvas (`get_design_defaults` has the numbers; see `captions-and-style`).
 3. **Caption position.** Re-place it on what the frame now shows. A position earned for another frame is stale.
 4. **Bars.** If bars now exist, captions can live in a bar, not over a leftover position.
 5. **Other overlays.** Overlays placed against an empty letterbox space now sit on the speaker. Move whatever no longer fits.

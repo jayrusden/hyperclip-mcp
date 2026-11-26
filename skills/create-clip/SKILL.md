@@ -5,6 +5,8 @@ description: End-to-end workflow for making Hyperclip clips. Load it whenever th
 
 # Create a clip
 
+This skill is also the `/create-clip` entry in the slash menu. If the user ran it with a request after the name ("3 LinkedIn clips from the pricing webinar"), that is the brief. If it names no source video, call `list_library`, show their recent videos in a short list and ask which one (plus the platform and angle if still unknown); if the library is empty, call `upload_video`.
+
 The path from "make me a clip" to an exported MP4. The loop is: draft, edit in chat, then export when the user says it is final. You do the judging; the tools read and write. Hand off to the other skills at the steps below instead of improvising their rules.
 
 ## 1. Brief gate
@@ -25,7 +27,7 @@ Find the video with `list_library`. If it is not there, call `upload_video`: it 
 
 ## 3. Draft
 
-Call `draft_clip` once per new clip, with a 3 to 6 word title and a one to three sentence summary. A story told from several places is one clip with `segments`, in playback order. Set `canvas_preset` if the platform is known. Read the result: it can carry framing and layout warnings that you act on in step 5.
+Call `draft_clip` once per new clip, with a 3 to 6 word title and a one to three sentence summary. A story told from several places is one clip with `segments`, in playback order. Set `canvas_preset` if the platform is known. Captions come on by default. Read the result: it can carry framing and layout warnings and a cut check that you act on in step 5. To try a variant (another length, canvas or angle) without touching the original, `duplicate_clip` it and edit the copy.
 
 Each "make a clip" request is a new draft. Only edit an existing clip when the user is clearly changing that clip.
 
@@ -35,7 +37,7 @@ Right after the first draft call `open_clip` once (use `clip_ids` for a batch). 
 
 ## 5. Iterate in chat
 
-Change the clip with `update_clip` and `apply_template`, using the specialist skills: `clip-craft` for layout, cards and pacing, `captions-and-style` for captions and type, `framing-and-platforms` for canvas and cropping. Rules for this loop:
+Change the clip with `update_clip`, `apply_template` (layouts), `apply_element` (a graphic or name strap over the footage) and `frame_speakers` (crop to the speaker), using the specialist skills: `clip-craft` for layout, cards, brand kit and pacing, `captions-and-style` for captions and type, `framing-and-platforms` for canvas and cropping. `get_brand_kit` and `get_design_defaults` give house colours and numbers. Rules for this loop:
 
 - Describe each change in one plain line ("Tightened the start by half a second"). No tool names, no numbers the user did not ask for.
 - When you do not have a clip's current bounds in this conversation, call `get_clip` before editing.
@@ -44,7 +46,7 @@ Change the clip with `update_clip` and `apply_template`, using the specialist sk
 
 ## 6. QA, then offer to export
 
-Run `clip-qa` on every clip before you offer to export. Fix what it finds in one edit, and disclose anything you could not fix in a clause.
+Run `clip-qa` on every clip before you offer to export (it starts with `read_clip_transcript`, which lists what to fix). Fix what it finds in one edit, and disclose anything you could not fix in a clause.
 
 Do not export until the user says the clip is final (each export makes an MP4 and uses their export capacity). When they do: `render_clips` with the clip ids. It returns at once and the chat shows an export card with progress and a Download button, so do not poll `get_job_status` and do not repeat the link; say in one line that it is exporting. Use `get_job_status` only if the user asks about an export or no card appears. Only a couple of exports run at once; queue bigger batches in small groups. Exporting a clip that was exported before makes a new MP4 and keeps the earlier ones. While a clip is exporting, edits are refused: the export renders the clip as it was when it started, so a mid-export edit would not be in the MP4. Tell the user to wait for the export card to finish, then make the edit (it then shows as edited since last export).
 

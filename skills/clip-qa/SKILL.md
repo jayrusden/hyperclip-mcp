@@ -9,19 +9,19 @@ Run this on every clip before you offer to render. It is silent: fix what you fi
 
 ## 1. Transcript checks
 
-Call `get_clip` for the current bounds and `read_transcript` over the clip's range (use `include_words=true` for the first and last two seconds and each join). Then confirm:
+Call `get_clip` for the current bounds, then `read_clip_transcript` for what the clip actually plays: the words in play order with clip-relative times, a marker at every join, and the cut check (silence at the start and end, a wordless tail, dangling opener or closer, leftover speech or split words at joins). Fix what the cut check lists. Use `read_transcript` with `include_words=true` on the source only where you need exact word times to move a cut (a short range, since word timings are long). Then confirm:
 
 - **Trims.** The start and end are where you think they are. If the user asked to cut or end on a particular word, the tool output shows it is out.
 - **Opening.** The first words are a hook or a whole thought, not "And", "So", "But", a half sentence, or a leftover word from the previous line. The first word does not land mid-syllable.
 - **Closing.** The clip ends on a full sentence, not on "so / and / but / the".
-- **Padding.** There is a short beat of silence before the first word and after the last, unless the user gave exact times. If the source has no silence there, you cannot add one: keep the cut and disclose it (see 4).
+- **Padding.** There is a short beat of silence before the first word and after the last (about 0.15 s in and 0.3 s out), unless the user gave exact times, and not much more: a tail of a second or more with no words is dead air, so trim it. If the source has no silence there, you cannot add one: keep the cut and disclose it (see 4).
 - **Joins.** Each cut between parts sits in a gap between words, with at least 0.2 s after a removed phrase. Seamless joins are contiguous.
 - **Continuity.** In a multi-part clip, no "because / that's why / so" points at something you cut, and no pronoun lacks its referent. Restore the bridge, unless the user asked you to remove it.
 - **Length.** Within about 5 seconds of any target the user stated. If not, trim or say why not.
 
 ## 2. A look is owed after pixels change
 
-Use `get_clip_frame` (several timestamps in one request is cheaper than several calls) once after your last edit when you changed any of:
+Use `get_clip_frame` once after your last edit when you changed any of the list below. It returns one still per call (`frame_sec`, seconds into the clip), so pick the one or two moments that matter, such as inside an overlay's window or on a speaker change, rather than sampling many:
 
 - an overlay, card or name strap (look inside its window, not at the clip midpoint)
 - a crop or zoom

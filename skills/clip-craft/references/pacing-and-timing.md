@@ -1,6 +1,6 @@
 # Pacing and timing numbers
 
-Every number here comes from the native Hyperclip harness: the `timing` block of `backend/harness/design_tokens.json` and the rules in `taste_harness.md` / `clip_harness.md` (§B.4). They are shipped defaults and a workspace can tune them, so prefer a number a tool returns, and anything the user states.
+These numbers are the shipped Hyperclip defaults. They can be tuned, so prefer a number a tool returns (`get_design_defaults`), and anything the user states.
 
 ## Picture-change interval (how often something changes on screen)
 
@@ -33,6 +33,6 @@ A layout change uses the house transition length: do not state one unless the us
 - Interior joins that are meant to be seamless stay contiguous with no pad. Exact user times and verbatim quotes get none either.
 - A dangling opener ("And", "So", "But") of 1.5 s or less at a clip edge can be trimmed off automatically; longer than that, look for a better sentence start.
 
-## What this harness does not specify
+## What is not covered
 
-The harness has no rules for audio (music, ducking or levels are handled by the host), for transitions between shots beyond the layout morph, or for reordering a line to the front of a clip. Do not invent them: if the user asks for one, say it is not available rather than improvising.
+There are no rules here for audio (music, ducking or levels are handled by the host), for transitions between shots beyond the layout morph, or for reordering a line to the front of a clip. Do not invent them: if the user asks for one, say it is not available rather than improvising.
