@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "hyperclip": {
+      "type": "http",
+      "url": "https://mcp.hyperclip.io/mcp"
+    }
+  }
+}
