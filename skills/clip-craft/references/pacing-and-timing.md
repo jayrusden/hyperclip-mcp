@@ -7,11 +7,11 @@ These numbers are the shipped Hyperclip defaults. They can be tuned, so prefer a
 | Scenario | Change the picture every |
 | --- | --- |
 | Points | 2 to 4 s (each new point is its own change) |
-| Conversation | 3 to 5 s; a long turn runs 5 to 13 s before it needs a punch or a card |
+| Conversation | 3 to 5 s; a long turn runs 5 to 13 s before it needs a punch |
 | Reveal | about 3 s, slowing toward the payoff; the payoff is the last change and is held |
 | Lesson | 5 to 13 s |
 
-Use only the row for the scenario you named. A picture change is a cut to a new segment or the other face, a punch, a layout switch, or a card; each one resets the clock. A single picture held past 13 s is flagged as too long unless the user asked for the hold. When the same picture reaches the top of its row, punch, change layout, or cut away. Every cut and punch lands on a pause or a turn, never inside a word.
+Use only the row for the scenario you named. A picture change is a cut to a new segment or the other face, a punch, or a layout switch; each one resets the clock. A single picture held past 13 s is flagged as too long unless the user asked for the hold. When the same picture reaches the top of its row, punch, change layout, or cut away. Every cut and punch lands on a pause or a turn, never inside a word.
 
 ## Fixed durations
 
@@ -20,10 +20,8 @@ Use only the row for the scenario you named. A picture change is a cut to a new 
 | Punch-in (zoom on a high-trust claim or a pivot) | held 2 to 5 s, then back out on a pause |
 | Reaction insert (cut to the listener on a real nod, laugh or turn, vertical or square only) | 1.5 to 2.5 s, then back to the talker on a pause |
 | Hook: claim, number, result or tension must land | within the first 3 s |
-| Name strap, if the user asked for one | on screen within the first 2 s |
-| Title hook on a non-Reveal clip | clear it once the hook has landed, within about 5 s |
 
-A layout change uses the house transition length: do not state one unless the user did. A reaction must be real and seen in a frame: with none in range, the change is a punch or a card, never an invented face flash.
+A layout change uses the house transition length: do not state one unless the user did. A reaction must be real and seen in a frame: with none in range, the change is a punch, never an invented face flash.
 
 ## Edge padding (set at every trim)
 

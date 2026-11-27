@@ -37,7 +37,7 @@ Right after the first draft call `open_clip` once (use `clip_ids` for a batch). 
 
 ## 5. Iterate in chat
 
-Change the clip with `update_clip`, `apply_template` (layouts), `apply_element` (a graphic or name strap over the footage) and `frame_speakers` (crop to the speaker), using the specialist skills: `clip-craft` for layout, cards, brand kit and pacing, `captions-and-style` for captions and type, `framing-and-platforms` for canvas and cropping. `get_brand_kit` and `get_design_defaults` give house colours and numbers. Rules for this loop:
+Change the clip with `update_clip`, `apply_template` (footage-only layouts, such as a two-speaker split) and `frame_speakers` (crop to the speaker), using the specialist skills: `clip-craft` for layout and pacing, `captions-and-style` for captions and type, `framing-and-platforms` for canvas and cropping. `get_brand_kit` gives brand colours and font for captions and `get_design_defaults` the house numbers. Captions are the only text on screen in the beta; there are no graphics, title hooks or name straps. Rules for this loop:
 
 - Describe each change in one plain line ("Tightened the start by half a second"). No tool names, no numbers the user did not ask for.
 - When you do not have a clip's current bounds in this conversation, call `get_clip` before editing.

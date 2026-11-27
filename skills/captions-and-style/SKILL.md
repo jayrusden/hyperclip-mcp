@@ -20,14 +20,13 @@ Every clip ships with captions on (most viewers watch muted), unless the user sa
 
 - Keep captions inside the middle 80% horizontally and clear of the platform's UI: roughly the top 10% and bottom 20% on vertical canvases.
 - Keep them off faces. Captions are one clip-wide position: with several speakers pick a position that is safe for all of them. If no common position works, use the default and say so in one clause. Never average positions or invent a round number that you did not see work.
-- Check the clash with other overlays: if a name strap, badge or brand pill sits in the same band while captions show, move the other overlay (or its timing) rather than stacking.
-- If a graphic takes the lower part of the frame, move `y` rather than shrinking the type. Do not zoom the crop to make room for captions: move the captions.
+- Do not zoom the crop to make room for captions: move the captions (`y`) instead of shrinking the type.
 - When the canvas or scale changes, old caption size and position are stale. Re-size and re-place in the same turn (see `framing-and-platforms`).
 - Letterbox bars are caption space: put captions in a bar, not over the video at a leftover position. `y` pins the top edge of the box, so it hangs below that line.
 
 ## Look after a change
 
-After a caption or typography change (position, size, spacing, font), call `get_clip_frame` at a moment with speech and check: readable, inside the frame, not over a face or a strap. Fix and look again. See `clip-qa` for the stop rules.
+After a caption or typography change (position, size, spacing, font), call `get_clip_frame` at a moment with speech and check: readable, inside the frame, not over a face. Fix and look again. See `clip-qa` for the stop rules.
 
 Do not claim what you did not observe. A still cannot show motion. The caption animations are per-word (highlight, fade, pop); nothing slides a highlight from word to word, and if the user asks for that, say it is not available instead of describing a substitute as if it were that. Describe what you configured when you did not look.
 

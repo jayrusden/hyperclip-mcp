@@ -9,7 +9,7 @@ Bundles the Hyperclip remote connector with six skills and two commands that tea
 - `skills/` (each is `SKILL.md`, with longer material in `references/`):
   - `create-clip`: the end-to-end task (brief, draft, live studio, iterate, QA, render, batches, failures). It is also the `/create-clip [source or brief]` entry in the slash menu; there is no separate command, so the menu shows it once.
   - `clip-selection`: map-first scouting, hooks, exact cut points, padding, multi-part joins, length, titles.
-  - `clip-craft`: pacing scenarios, punches, cards, name straps, layouts and templates, what the tools cannot do yet.
+  - `clip-craft`: pacing scenarios, punches, two-speaker footage layouts, and what is not in the beta (no graphics or overlays besides captions).
   - `captions-and-style`: captions on by default, placement and safe zones, looking after changes, fixing wrong words.
   - `framing-and-platforms`: canvas presets and lengths, fill versus letterbox, manual reframing, canvas-change checklist.
   - `clip-qa`: the pre-render checklist and the rules for resolving clashes honestly.

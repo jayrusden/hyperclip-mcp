@@ -51,7 +51,7 @@ Sources that already contain black bars (a panel floating on black, burned-in lo
 ## Several speakers
 
 - Vertical or square: one face fills the frame at a time, usually the talker. Flip to the other speaker on a turn or a real reaction by splitting the segment on a gap between words and changing only the crop on each side.
-- Landscape: both speakers keep their own footage slot for the whole clip (`apply_template` with `split`, or `thirds` with a graphic).
+- Landscape: both speakers keep their own footage slot for the whole clip (`apply_template` with `split`).
 - Cross-speaker match: when a clip alternates between faces, compare head size and eyeline across the cuts and adjust the crops so they match. A cut from a big centred head to a small low one looks amateur. Do this after the crops are in, then look at one frame per speaker. An intentional difference the user asked for stays.
 
 ## Canvas-change checklist
@@ -63,7 +63,7 @@ Changing the canvas, or changing scale or fit so bars appear or disappear, re-op
 2. **Caption size.** Re-size font size, width and words per line together for this canvas (`get_design_defaults` has the numbers; see `captions-and-style`).
 3. **Caption position.** Re-place it on what the frame now shows. A position earned for another frame is stale.
 4. **Bars.** If bars now exist, captions can live in a bar, not over a leftover position.
-5. **Other overlays.** Overlays placed against an empty letterbox space now sit on the speaker. Move whatever no longer fits.
+5. **Layout.** A layout set against an empty letterbox space may now sit on the speaker. Check it still fits.
 6. **Look once** with `get_clip_frame` before offering to render.
 
 ## Safe zones
